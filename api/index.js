@@ -24,14 +24,15 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-    credentials: true,
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
+  credentials: true,
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true); // Allow access if the origin is in the allowedOrigins list or not present (e.g., server-to-server requests)
+    } else {
+      callback(new Error('Not allowed by CORS'), false); // Reject calls from disallowed origins
     }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
 }));
 
 app.use(express.json());
