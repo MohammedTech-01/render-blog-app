@@ -23,16 +23,19 @@ const allowedOrigins = [
   'https://mern-task-app-xo8c.onrender.com'
 ];
 
+
 app.use(cors({
   credentials: true,
   origin: (origin, callback) => {
+    console.log(`Origin attempting access: ${origin}`);  // Log the origin for debugging
     if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true); // Allow access if the origin is in the allowedOrigins list or not present (e.g., server-to-server requests)
+      callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'), false); // Reject calls from disallowed origins
+      console.error(`Blocked by CORS: ${origin}`);  // Log if an origin is blocked
+      callback(new Error('Not allowed by CORS'), false);
     }
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 
 app.use(express.json());
