@@ -21,7 +21,7 @@ const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY;
 app.use(
   cors({
     credentials: true,
-    origin: `http://localhost:${PORT}`,
+    origin: [`http://localhost:${PORT}`, "https://mern-task-app-xo8c.onrender.com/"],
   })
 );
 app.use(express.json());
