@@ -8,7 +8,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const multer = require("multer");
-const uploadMiddleware = multer({ dest: "temp/" });
+const uploadMiddleware = multer({ dest: "uploads/" });
 const fs = require("fs");
 
 const app = express();
@@ -36,7 +36,7 @@ app.use(cors({
 
 app.use(express.json());
 app.use(cookieParser());
-app.use("/temp", express.static(__dirname + "/temp"));
+app.use("/uploads", express.static(__dirname + "/uploads"));
 
 // MongoDB connection
 mongoose
