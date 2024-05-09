@@ -18,12 +18,22 @@ const PORT = process.env.PORT;
 const MONGODB_URL = process.env.MONGODB_URL;
 const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY;
 
-app.use(
-  cors({
+const allowedOrigins = [
+  `http://localhost:${PORT}`,  // Assuming PORT is where your client is running locally
+  'https://mern-task-app-xo8c.onrender.com'
+];
+
+app.use(cors({
     credentials: true,
-    origin: [`http://localhost:${PORT}`, "https://mern-task-app-xo8c.onrender.com/"],
-  })
-);
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    }
+}));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use("/temp", express.static(__dirname + "/temp"));
